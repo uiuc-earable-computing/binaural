@@ -1,630 +1,2132 @@
 
-
 <!DOCTYPE html>
-<html lang="en-US">
-  <head>
-    <meta charset="UTF-8">
-
-
-
-  </head>
-  <body>
-    <section class="page-header">
-    
-      <h1 class="project-name">Learning to Separate Voices by Spatial Regions: Demo</h1>
-      <h2 class="project-tagline"></h2>
-      
-      
-    </section>
-
-<!--     <section class="main-content">
-      <h2 id="1">FaceTime at a Cocktail Party: Towards High-quality Robust Audio-Visual Speech Extraction with Incremental Speaker Embedding</h2> -->
-
-<p><FONT COLOR="RED">All the sounds are binaural sounds, so please wear earphones to listen. </FONT></p>
-
-
-<h2>Region Setup</h2>
-<img src="binaural.jpg" alt="Trulli" width="500" height="333">
-
-
-<style>
-table, th, td {
-  border:1px solid black;
-}
-</style>
-
-<hr>
-<h3>Two-Source Mixtures<h3>
-<!-- <h3><br /></h3> -->
-
-
-<p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mixture </p>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="mixture/idx2.wav" type="audio/wav" /></audio>
-
-<!-- <table style="width:100%">
-  <tr>
-    <th>Mixture</th>
-  </tr>
-  <tr>
-    <td><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="mixture/idx2.wav" type="audio/wav" /></audio></td>
-  </tr>
-</table> -->
-
-<br>
-
-For the first mixture, region one has no sound source, so the groundtruth is just empty sound. Region 2 and region 3 each has one speech. The three regions are shown above or in Figure 1 of the paper.
-<table style="width:100%">
-  <tr>
-    <th></th>
-    <th>Ground</th>
-    <th>General</th>
-    <th>Personalized</th>
-    <th>Self</th>
-    <th>Semi</th>
-    <th>Few-Semi</th>
-  </tr>
-  <tr>
-    <th>Region1 </th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="ground/idx2r1.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="general/idx2r1.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="personal/idx2r1.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="self/idx2r1.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="semi/idx2r1.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="few_semi/idx2r1.wav" type="audio/wav" /></audio></th>
-  </tr>
-  <tr>
-    <th>Region2</th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="ground/idx2r2.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="general/idx2r2.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="personal/idx2r2.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="self/idx2r2.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="semi/idx2r2.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="few_semi/idx2r2.wav" type="audio/wav" /></audio></th>
-  </tr>
-  <tr>
-    <th>Region3</th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="ground/idx2r3.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="general/idx2r3.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="personal/idx2r3.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="self/idx2r3.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="semi/idx2r3.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="few_semi/idx2r3.wav" type="audio/wav" /></audio></th>
-  </tr>
-</table>
-
-
- 
-
-
-<p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mixture </p>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="mixture/idx3.wav" type="audio/wav" /></audio>
-
-<table style="width:100%">
-  <tr>
-    <th></th>
-    <th>Ground</th>
-    <th>General</th>
-    <th>Personalized</th>
-    <th>Self</th>
-    <th>Semi</th>
-    <th>Few-Semi</th>
-  </tr>
-
-  <tr>
-  <th>Region1</th>
-  <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="ground/idx3r1.wav" type="audio/wav" /></audio></th>
-  <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="general/idx3r1.wav" type="audio/wav" /></audio></th>
-  <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="personal/idx3r1.wav" type="audio/wav" /></audio></th>
-  <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="self/idx3r1.wav" type="audio/wav" /></audio></th>
-  <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="semi/idx3r1.wav" type="audio/wav" /></audio></th>
-  <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="few_semi/idx3r1.wav" type="audio/wav" /></audio></th>
-  </tr>
-
-  <tr>
-  <th>Region2</th>
-  <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="ground/idx3r2.wav" type="audio/wav" /></audio></th>
-  <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="general/idx3r2.wav" type="audio/wav" /></audio></th>
-  <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="personal/idx3r2.wav" type="audio/wav" /></audio></th>
-  <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="self/idx3r2.wav" type="audio/wav" /></audio></th>
-  <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="semi/idx3r2.wav" type="audio/wav" /></audio></th>
-  <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="few_semi/idx3r2.wav" type="audio/wav" /></audio></th>
-  </tr>
-
-
-  <tr>
-  <th>Region3</th>
-  <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="ground/idx3r3.wav" type="audio/wav" /></audio></th>
-  <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="general/idx3r3.wav" type="audio/wav" /></audio></th>
-  <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="personal/idx3r3.wav" type="audio/wav" /></audio></th>
-  <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="self/idx3r3.wav" type="audio/wav" /></audio></th>
-  <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="semi/idx3r3.wav" type="audio/wav" /></audio></th>
-  <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="few_semi/idx3r3.wav" type="audio/wav" /></audio></th>
-  </tr>
-  </table>
-  
-
-
-
-
-<p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mixture </p>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="mixture/idx4.wav" type="audio/wav" /></audio>
-
-<table style="width:100%">
-  <tr>
-    <th></th>
-    <th>Ground</th>
-    <th>General</th>
-    <th>Personalized</th>
-    <th>Self</th>
-    <th>Semi</th>
-    <th>Few-Semi</th>
-  </tr>
-
-  <tr>
-  <th>Region1</th>
-  <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="ground/idx4r1.wav" type="audio/wav" /></audio></th>
-  <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="general/idx4r1.wav" type="audio/wav" /></audio></th>
-  <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="personal/idx4r1.wav" type="audio/wav" /></audio></th>
-  <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="self/idx4r1.wav" type="audio/wav" /></audio></th>
-  <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="semi/idx4r1.wav" type="audio/wav" /></audio></th>
-  <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="few_semi/idx4r1.wav" type="audio/wav" /></audio></th>
-  </tr>
-
-  <tr>
-  <th>Region2</th>
-  <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="ground/idx4r2.wav" type="audio/wav" /></audio></th>
-  <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="general/idx4r2.wav" type="audio/wav" /></audio></th>
-  <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="personal/idx4r2.wav" type="audio/wav" /></audio></th>
-  <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="self/idx4r2.wav" type="audio/wav" /></audio></th>
-  <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="semi/idx4r2.wav" type="audio/wav" /></audio></th>
-  <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="few_semi/idx4r2.wav" type="audio/wav" /></audio></th>
-  </tr>
-
-
-  <tr>
-  <th>Region3</th>
-  <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="ground/idx4r3.wav" type="audio/wav" /></audio></th>
-  <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="general/idx4r3.wav" type="audio/wav" /></audio></th>
-  <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="personal/idx4r3.wav" type="audio/wav" /></audio></th>
-  <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="self/idx4r3.wav" type="audio/wav" /></audio></th>
-  <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="semi/idx4r3.wav" type="audio/wav" /></audio></th>
-  <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="few_semi/idx4r3.wav" type="audio/wav" /></audio></th>
-  </tr>
-  </table>
-
-<br>
-<br>  
-<br>
-<hr>
-
-<!-- ---------------------------------------3 below------------------------- -->
-
-
-
-<h3>Three-Source Mixtures<h3>
-<!-- <h3><br /></h3> -->
-
-
-<p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mixture </p>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="mixture_3/idx1.wav" type="audio/wav" /></audio>
-
-<table style="width:100%">
-  <tr>
-    <th></th>
-    <th>Ground</th>
-    <th>General</th>
-    <th>Personalized</th>
-    <th>Self</th>
-    <th>Semi</th>
-    <th>Few-Semi</th>
-  </tr>
-  <tr>
-    <th>Region1 </th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="ground_3/idx1r1.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="general_3/idx1r1.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="personal_3/idx1r1.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="self_3/idx1r1.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="semi_3/idx1r1.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="few_semi_3/idx1r1.wav" type="audio/wav" /></audio></th>
-  </tr>
-  <tr>
-    <th>Region2</th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="ground_3/idx1r2.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="general_3/idx1r2.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="personal_3/idx1r2.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="self_3/idx1r2.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="semi_3/idx1r2.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="few_semi_3/idx1r2.wav" type="audio/wav" /></audio></th>
-  </tr>
-  <tr>
-    <th>Region3</th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="ground_3/idx1r3.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="general_3/idx1r3.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="personal_3/idx1r3.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="self_3/idx1r3.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="semi_3/idx1r3.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="few_semi_3/idx1r3.wav" type="audio/wav" /></audio></th>
-  </tr>
-</table>
- 
-
-<p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mixture </p>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="mixture_3/idx2.wav" type="audio/wav" /></audio>
-
-<table style="width:100%">
-  <tr>
-    <th></th>
-    <th>Ground</th>
-    <th>General</th>
-    <th>Personalized</th>
-    <th>Self</th>
-    <th>Semi</th>
-    <th>Few-Semi</th>
-  </tr>
-  <tr>
-    <th>Region1 </th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="ground_3/idx2r1.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="general_3/idx2r1.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="personal_3/idx2r1.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="self_3/idx2r1.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="semi_3/idx2r1.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="few_semi_3/idx2r1.wav" type="audio/wav" /></audio></th>
-  </tr>
-  <tr>
-    <th>Region2</th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="ground_3/idx2r2.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="general_3/idx2r2.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="personal_3/idx2r2.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="self_3/idx2r2.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="semi_3/idx2r2.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="few_semi_3/idx2r2.wav" type="audio/wav" /></audio></th>
-  </tr>
-  <tr>
-    <th>Region3</th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="ground_3/idx2r3.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="general_3/idx2r3.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="personal_3/idx2r3.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="self_3/idx2r3.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="semi_3/idx2r3.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="few_semi_3/idx2r3.wav" type="audio/wav" /></audio></th>
-  </tr>
-</table>
- 
-
-
-<p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mixture </p>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="mixture_3/idx3.wav" type="audio/wav" /></audio>
- 
-<table style="width:100%">
-  <tr>
-    <th></th>
-    <th>Ground</th>
-    <th>General</th>
-    <th>Personalized</th>
-    <th>Self</th>
-    <th>Semi</th>
-    <th>Few-Semi</th>
-  </tr>
-
-  <tr>
-  <th>Region1</th>
-  <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="ground_3/idx3r1.wav" type="audio/wav" /></audio></th>
-  <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="general_3/idx3r1.wav" type="audio/wav" /></audio></th>
-  <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="personal_3/idx3r1.wav" type="audio/wav" /></audio></th>
-  <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="self_3/idx3r1.wav" type="audio/wav" /></audio></th>
-  <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="semi_3/idx3r1.wav" type="audio/wav" /></audio></th>
-  <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="few_semi_3/idx3r1.wav" type="audio/wav" /></audio></th>
-  </tr>
-
-  <tr>
-  <th>Region2</th>
-  <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="ground_3/idx3r2.wav" type="audio/wav" /></audio></th>
-  <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="general_3/idx3r2.wav" type="audio/wav" /></audio></th>
-  <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="personal_3/idx3r2.wav" type="audio/wav" /></audio></th>
-  <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="self_3/idx3r2.wav" type="audio/wav" /></audio></th>
-  <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="semi_3/idx3r2.wav" type="audio/wav" /></audio></th>
-  <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="few_semi_3/idx3r2.wav" type="audio/wav" /></audio></th>
-  </tr>
-
-
-  <tr>
-  <th>Region3</th>
-  <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="ground_3/idx3r3.wav" type="audio/wav" /></audio></th>
-  <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="general_3/idx3r3.wav" type="audio/wav" /></audio></th>
-  <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="personal_3/idx3r3.wav" type="audio/wav" /></audio></th>
-  <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="self_3/idx3r3.wav" type="audio/wav" /></audio></th>
-  <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="semi_3/idx3r3.wav" type="audio/wav" /></audio></th>
-  <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="few_semi_3/idx3r3.wav" type="audio/wav" /></audio></th>
-  </tr>
-</table>
-<br>
-<br>  
-<br>
-<hr>
-
-
-<!-- ---------------------------------------4 below------------------------- -->
-
-
-
-<h3>Four-Source Mixtures<h3>
-<!-- <h3><br /></h3> -->
-<p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mixture </p>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="mixture_4/idx1.wav" type="audio/wav" /></audio>
-
-<table style="width:100%">
-  <tr>
-    <th></th>
-    <th>Ground</th>
-    <th>General</th>
-    <th>Personalized</th>
-    <th>Self</th>
-    <th>Semi</th>
-    <th>Few-Semi</th>
-  </tr>
-  <tr>
-    <th>Region1 </th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="ground_4/idx1r1.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="general_4/idx1r1.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="personal_4/idx1r1.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="self_4/idx1r1.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="semi_4/idx1r1.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="few_semi_4/idx1r1.wav" type="audio/wav" /></audio></th>
-  </tr>
-  <tr>
-    <th>Region2</th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="ground_4/idx1r2.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="general_4/idx1r2.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="personal_4/idx1r2.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="self_4/idx1r2.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="semi_4/idx1r2.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="few_semi_4/idx1r2.wav" type="audio/wav" /></audio></th>
-  </tr>
-  <tr>
-    <th>Region3</th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="ground_4/idx1r3.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="general_4/idx1r3.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="personal_4/idx1r3.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="self_4/idx1r3.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="semi_4/idx1r3.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="few_semi_4/idx1r3.wav" type="audio/wav" /></audio></th>
-  </tr>
-</table>
- 
-
-
-
-<p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mixture </p>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="mixture_4/idx2.wav" type="audio/wav" /></audio>
- 
-<table style="width:100%">
-  <tr>
-    <th></th>
-    <th>Ground</th>
-    <th>General</th>
-    <th>Personalized</th>
-    <th>Self</th>
-    <th>Semi</th>
-    <th>Few-Semi</th>
-  </tr>
-  <tr>
-    <th>Region1 </th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="ground_4/idx2r1.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="general_4/idx2r1.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="personal_4/idx2r1.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="self_4/idx2r1.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="semi_4/idx2r1.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="few_semi_4/idx2r1.wav" type="audio/wav" /></audio></th>
-  </tr>
-  <tr>
-    <th>Region2</th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="ground_4/idx2r2.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="general_4/idx2r2.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="personal_4/idx2r2.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="self_4/idx2r2.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="semi_4/idx2r2.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="few_semi_4/idx2r2.wav" type="audio/wav" /></audio></th>
-  </tr>
-  <tr>
-    <th>Region3</th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="ground_4/idx2r3.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="general_4/idx2r3.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="personal_4/idx2r3.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="self_4/idx2r3.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="semi_4/idx2r3.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="few_semi_4/idx2r3.wav" type="audio/wav" /></audio></th>
-  </tr>
-</table>
-
-
-<p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mixture </p>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="mixture_4/idx3.wav" type="audio/wav" /></audio>
- 
-<table style="width:100%">
-  <tr>
-    <th></th>
-    <th>Ground</th>
-    <th>General</th>
-    <th>Personalized</th>
-    <th>Self</th>
-    <th>Semi</th>
-    <th>Few-Semi</th>
-  </tr>
-
-  <tr>
-  <th>Region1</th>
-  <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="ground_4/idx3r1.wav" type="audio/wav" /></audio></th>
-  <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="general_4/idx3r1.wav" type="audio/wav" /></audio></th>
-  <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="personal_4/idx3r1.wav" type="audio/wav" /></audio></th>
-  <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="self_4/idx3r1.wav" type="audio/wav" /></audio></th>
-  <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="semi_4/idx3r1.wav" type="audio/wav" /></audio></th>
-  <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="few_semi_4/idx3r1.wav" type="audio/wav" /></audio></th>
-  </tr>
-
-  <tr>
-  <th>Region2</th>
-  <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="ground_4/idx3r2.wav" type="audio/wav" /></audio></th>
-  <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="general_4/idx3r2.wav" type="audio/wav" /></audio></th>
-  <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="personal_4/idx3r2.wav" type="audio/wav" /></audio></th>
-  <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="self_4/idx3r2.wav" type="audio/wav" /></audio></th>
-  <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="semi_4/idx3r2.wav" type="audio/wav" /></audio></th>
-  <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="few_semi_4/idx3r2.wav" type="audio/wav" /></audio></th>
-  </tr>
-
-
-  <tr>
-  <th>Region3</th>
-  <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="ground_4/idx3r3.wav" type="audio/wav" /></audio></th>
-  <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="general_4/idx3r3.wav" type="audio/wav" /></audio></th>
-  <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="personal_4/idx3r3.wav" type="audio/wav" /></audio></th>
-  <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="self_4/idx3r3.wav" type="audio/wav" /></audio></th>
-  <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="semi_4/idx3r3.wav" type="audio/wav" /></audio></th>
-  <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="few_semi_4/idx3r3.wav" type="audio/wav" /></audio></th>
-  </tr>
-</table>
-<br>
-<br>  
-<br>
-<hr>
-
-
-<!-- ---------------------------------------5 below------------------------- -->
-
-
-
-<h3>Five-Source Mixtures<h3>
-<!-- <h3><br /></h3> -->
-
-<p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mixture </p>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="mixture_5/idx1.wav" type="audio/wav" /></audio>
- 
-<table style="width:100%">
-  <tr>
-    <th></th>
-    <th>Ground</th>
-    <th>General</th>
-    <th>Personalized</th>
-    <th>Self</th>
-    <th>Semi</th>
-    <th>Few-Semi</th>
-  </tr>
-  <tr>
-    <th>Region1 </th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="ground_5/idx1r1.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="general_5/idx1r1.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="personal_5/idx1r1.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="self_5/idx1r1.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="semi_5/idx1r1.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="few_semi_5/idx1r1.wav" type="audio/wav" /></audio></th>
-  </tr>
-  <tr>
-    <th>Region2</th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="ground_5/idx1r2.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="general_5/idx1r2.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="personal_5/idx1r2.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="self_5/idx1r2.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="semi_5/idx1r2.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="few_semi_5/idx1r2.wav" type="audio/wav" /></audio></th>
-  </tr>
-  <tr>
-    <th>Region3</th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="ground_5/idx1r3.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="general_5/idx1r3.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="personal_5/idx1r3.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="self_5/idx1r3.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="semi_5/idx1r3.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="few_semi_5/idx1r3.wav" type="audio/wav" /></audio></th>
-  </tr>
-</table>
-
-
-<p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mixture </p>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="mixture_5/idx2.wav" type="audio/wav" /></audio>
- 
-<table style="width:100%">
-  <tr>
-    <th></th>
-    <th>Ground</th>
-    <th>General</th>
-    <th>Personalized</th>
-    <th>Self</th>
-    <th>Semi</th>
-    <th>Few-Semi</th>
-  </tr>
-  <tr>
-    <th>Region1 </th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="ground_5/idx2r1.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="general_5/idx2r1.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="personal_5/idx2r1.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="self_5/idx2r1.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="semi_5/idx2r1.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="few_semi_5/idx2r1.wav" type="audio/wav" /></audio></th>
-  </tr>
-  <tr>
-    <th>Region2</th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="ground_5/idx2r2.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="general_5/idx2r2.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="personal_5/idx2r2.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="self_5/idx2r2.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="semi_5/idx2r2.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="few_semi_5/idx2r2.wav" type="audio/wav" /></audio></th>
-  </tr>
-  <tr>
-    <th>Region3</th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="ground_5/idx2r3.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="general_5/idx2r3.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="personal_5/idx2r3.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="self_5/idx2r3.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="semi_5/idx2r3.wav" type="audio/wav" /></audio></th>
-    <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="few_semi_5/idx2r3.wav" type="audio/wav" /></audio></th>
-  </tr>
-</table>
-
-<p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mixture </p>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="mixture_5/idx3.wav" type="audio/wav" /></audio>
- 
-<table style="width:100%">
-  <tr>
-    <th></th>
-    <th>Ground</th>
-    <th>General</th>
-    <th>Personalized</th>
-    <th>Self</th>
-    <th>Semi</th>
-    <th>Few-Semi</th>
-  </tr>
-
-  <tr>
-  <th>Region1</th>
-  <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="ground_5/idx3r1.wav" type="audio/wav" /></audio></th>
-  <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="general_5/idx3r1.wav" type="audio/wav" /></audio></th>
-  <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="personal_5/idx3r1.wav" type="audio/wav" /></audio></th>
-  <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="self_5/idx3r1.wav" type="audio/wav" /></audio></th>
-  <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="semi_5/idx3r1.wav" type="audio/wav" /></audio></th>
-  <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="few_semi_5/idx3r1.wav" type="audio/wav" /></audio></th>
-  </tr>
-
-  <tr>
-  <th>Region2</th>
-  <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="ground_5/idx3r2.wav" type="audio/wav" /></audio></th>
-  <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="general_5/idx3r2.wav" type="audio/wav" /></audio></th>
-  <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="personal_5/idx3r2.wav" type="audio/wav" /></audio></th>
-  <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="self_5/idx3r2.wav" type="audio/wav" /></audio></th>
-  <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="semi_5/idx3r2.wav" type="audio/wav" /></audio></th>
-  <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="few_semi_5/idx3r2.wav" type="audio/wav" /></audio></th>
-  </tr>
-
-
-  <tr>
-  <th>Region3</th>
-  <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="ground_5/idx3r3.wav" type="audio/wav" /></audio></th>
-  <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="general_5/idx3r3.wav" type="audio/wav" /></audio></th>
-  <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="personal_5/idx3r3.wav" type="audio/wav" /></audio></th>
-  <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="self_5/idx3r3.wav" type="audio/wav" /></audio></th>
-  <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="semi_5/idx3r3.wav" type="audio/wav" /></audio></th>
-  <th><audio controls="" class="audio-player" preload="metadata" style="width: 180px;"> <source src="few_semi_5/idx3r3.wav" type="audio/wav" /></audio></th>
-  </tr>
-</table>
-    
-  </body>
+
+<html>
+    <head>
+        <meta charset="utf-8">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+
+        <meta name="description" content="SAGRNN Demos">
+        <meta name="author" content="Ke Tan">
+
+	    <title>SAGRNN: Self-Attentive Gated RNNs for Binaural Speaker Separation with Interaural Cue Preservation</title>
+
+        <!-- Bootflat CSS -->
+        <link rel="stylesheet" href="css/bootflat.css">
+
+        <!-- Bootstrap Core CSS -->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Custom CSS -->
+        <link href="css/index.css" rel="stylesheet">
+
+        <!-- Custom Fonts -->
+        <link href="font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href="http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+    </head>
+
+
+    <body>
+        <div id="top" style="position: relative; top: -100px;"></div>
+        <header id="header_navbar">
+		    <nav class="navbar navbar-default navbar-fixed-top fadeIn" role="navigation">
+                <div>
+                    <div class="navbar-header">
+					    <button type="button" class="navbar-toggle collapsed" id="button_navbar" data-toggle="collapse" data-target="#dropdown-box-1">
+						    <span class="sr-only">Toggle navigation</span>
+						    <span class="icon-bar"></span>
+						    <span class="icon-bar"></span>
+						    <span class="icon-bar"></span>
+					    </button>
+				    </div>
+
+    		        <div class="collapse navbar-collapse navbar-right" id="dropdown-box-1">
+	    			    <ul class="nav navbar-nav">
+		    			    <li><a href="#intro_target">Intro</a></li>
+                            <li><a href="#results_target">Results</a></li>
+			    			<li><a href="#samples_target">Samples</a></li>
+				    		<li><a href="#references_target">References</a></li>
+				    	</ul>
+			        </div>
+                </div>
+		    </nav>
+	    </header>
+
+		<div id="paper_info">
+			<div id="paper_title">
+    	        <h1>Learning to Separate Voices by Spatial Regions</h1>
+                <p style="color:red;font-size:18px;">Publish as conference paper at "International Conference on Machine Learning" - ICML 2022</p>
+
+
+				<h4>Zhongweiyang Xu<sup>1</sup>, Romit Roy Choudhury<sup>1</sup></h4>
+				<h5><sup>1</sup>University of Illinois Urbana-Champaign</h5>
+			</div>
+		</div>
+
+        <div id="container">
+
+            <div id="intro_target" style="position: relative; top: -50px;"></div>
+	        <div id="intro">
+				<h1><a class="subtitle">Intro</a></h1>
+                
+                
+
+
+                
+
+
+                <p>In this project, we propose a self-supervised framework to solve the classical speech separation problem under two certain scenarios. First, we assume we have two microphones on <a href="https://synrg.csl.illinois.edu/earables.html" target="_blank">'earable'</a> devices worn at the ears. Second, we do the separation by spatial regions, which means we first devide the spatial space into regions and then output a separated sound for each region, as shown below. Our method does not assume known number of sources and leverage the spatial cues provided by the HRTF for spatial separation. The result shows superior results of region-based separation comparing with classical all-source separation mechaism, while our method does not assume number of sources and is self-supervised.</p>
+                
+                <a><img src="img/binaural.jpg" class="center" style="object-fit:contain;
+                    width:400px;
+                    height:300px"/></a>
+
+                <p>Since the binaural recordings are rendered by the head related transfer functions (HRTFs) and HRTFs are personal, we believe these region-based separation model should be trained in a personalized way so that the separation result is the best for each person. However, personalized HRTF from users are not available, thus we propose to let the model learn from user's real-world personal bianural recordings in a self-supervised manner, as these recordings encode the HRTF information. Our self-supervision involves two stages: the preprocessing stage and the learning stage.
+                
+                </p>
+                <!-- <a><embed src="img/2_stage_pipeline.pdf"  style="object-fit:contain;
+                    width:1000px;
+                    height:370px" class="center" /></a>
+                <a><iframe src="img/2_stage_pipeline.pdf" style="object-fit:contain;
+                    width:1000px;
+                    height:370px" class="center"></iframe></a> -->
+                
+                <a><img src="img/two_stage.png" style="object-fit:contain;
+                    width:1000px;
+                    height:370px" class="center"/></a>
+                <p>As shown above, the first stage takes real-world binaural mixture as input and use a spatial clustering module (classical signal processing based) to separate and select 'relatively clean' spatial sources. These sources form a personal database which generates a region-based training dataset by random mixing.
+                    The personalized dataset is then used in the second stage to train the dual-channel TasNet [1] for region-based separation.
+                </p>
+
+                <p>The spatial clustering module in stage one is based on the DUET [2] paper, which aims to cluster the time-frequency bins by interaural time and level differences, as shown below. However this idea is challenging to implement in the binaural case due to spatial aliasing and unknown number of sources. We further improve on this idea to solve these problems and the detailed algorithm could be checked in <a href="https://synrg.csl.illinois.edu/papers/source_separation_icml22.pdf" target="_blank">our paper</a>. </p>
+                <a><img src="img/hi_cluster.jpg" style="object-fit:contain;
+                    width:400px;
+                    height:300px" class="center"/></a>
+
+
+                <br>
+                <!-- <div class="architecture_caption">Fig. 1. Diagram of SISO SAGRNN. The dotted lines represent the procedures that exist only during training.</div> -->
+
+            </div>
+
+            <div id="clear"></div>
+
+            <div id="results_target" style="position: relative; top: -50px;"></div>
+	        <div id="results">
+                <h1><a class="subtitle">Results</a></h1>
+                <p align="justify">
+                    We first do comparison between self-supervision with supervision for region-based separation:
+                    <ul align="justify" >
+                        <li>GENERAL - Single general model trained with the CIPIC [3] HRTF database</li>
+                        <li>PERSONALIZED* - Supervised training assume known HRTF</li>
+                        <li>SELF - Self-supervised training without known HRTF</li>
+                        <li>SEMI - Same as SELF but with half clean source</li>
+                        <li>FEW-SEMI - Same as SELF but only 1hr of training</li>
+                    </ul>
+                    The result shows our self-supervision closes the gap between general model and ideal personalized model.
+                </p>
+                <a><img src="img/result1.png" style="object-fit:contain;
+                            width:500px;
+                            height:500px"/></a>
+                <p>We then do comparison between region based separation with classical all-source separation. We only consider the case when there is only one speaker is the first region and compare the SNR for that single speaker. All-source separation model is the same achitecture and is trained assuming known perosnal HRTF and known number of sources. Even though, our self-supervised models can achieve 25% of gain roughly.</p>
+                <a><img src="img/result2.png" style="object-fit:contain;
+                            width:500px;
+                            height:500px;"/></a>
+                    
+            </div>
+
+            <div id="samples_target" style="position: relative; top: -50px;"></div>
+            <div id="samples">
+                <h1><a class="subtitle">Samples</a></h1>
+
+                <p align="justify">
+                    Here are some (binaural) audio samples for listening:
+                    <!-- <ul align="justify" >
+                        <li>Unprocessed Mixture - original binaural sound mixture</li>
+                        <li>MIMO TasNet - refer to the approach in [2], where the network configurations are slightly changed such that the model is noncausal and has a comparable size to our model</li>
+                        <li>MIMO SAGRNN - refer to our proposed approach</li>
+                    </ul> -->
+                </p>
+
+                <br>
+                
+
+                <h4><b>I. Two-Source Mixtures</b></h4>
+                <table class="audio_demos">
+                    <thead>
+                        <tr>
+                            <th style="text-align:center;">Mixture</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr style="border-top:1px solid black">
+                            <!-- <td rowspan="2">
+                                <b>A</b>
+                            </td> -->
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="mixture/idx2.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            
+                        </tr>
+
+
+
+
+
+                    </tbody>
+                </table>
+
+
+                <table class="audio_demos">
+                    <thead>
+                        <tr>
+                            <th style="text-align:center;">Regions</th>
+                            <th style="text-align:center;">Ground</th>
+                            <th style="text-align:center;">General</th>
+                            <th style="text-align:center;">Personalized</th>
+                            <th style="text-align:center;">Self</th>
+                            <th style="text-align:center;">Semi</th>
+                            <th style="text-align:center;">Few-Semi</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr style="border-top:1px solid black">
+                            <td>
+                                <b>R1</b>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="ground/idx2r1.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="general/idx2r1.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="personal/idx2r1.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="self/idx2r1.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="semi/idx2r1.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="few_semi/idx2r1.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                        </tr>
+                        
+
+                        <tr style="border-top:1px solid black">
+                            <td>
+                                <b>R1</b>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="ground/idx2r2.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="general/idx2r2.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="personal/idx2r2.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="self/idx2r2.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="semi/idx2r2.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="few_semi/idx2r2.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                        </tr>
+
+                        <tr style="border-top:1px solid black">
+                            <td>
+                                <b>R1</b>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="ground/idx2r3.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="general/idx2r3.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="personal/idx2r3.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="self/idx2r3.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="semi/idx2r3.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="few_semi/idx2r3.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                        </tr>
+                        
+                    </tbody>
+                </table>
+
+                <table class="audio_demos">
+                    <thead>
+                        <tr>
+                            <th style="text-align:center;">Mixture</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr style="border-top:1px solid black">
+                            <!-- <td rowspan="2">
+                                <b>A</b>
+                            </td> -->
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="mixture/idx3.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            
+                        </tr>
+
+
+
+
+
+                    </tbody>
+                </table>
+
+
+                <table class="audio_demos">
+                    <thead>
+                        <tr>
+                            <th style="text-align:center;">Regions</th>
+                            <th style="text-align:center;">Ground</th>
+                            <th style="text-align:center;">General</th>
+                            <th style="text-align:center;">Personalized</th>
+                            <th style="text-align:center;">Self</th>
+                            <th style="text-align:center;">Semi</th>
+                            <th style="text-align:center;">Few-Semi</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr style="border-top:1px solid black">
+                            <td>
+                                <b>R1</b>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="ground/idx3r1.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="general/idx3r1.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="personal/idx3r1.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="self/idx3r1.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="semi/idx3r1.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="few_semi/idx3r1.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                        </tr>
+                        
+
+                        <tr style="border-top:1px solid black">
+                            <td>
+                                <b>R1</b>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="ground/idx3r2.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="general/idx3r2.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="personal/idx3r2.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="self/idx3r2.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="semi/idx3r2.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="few_semi/idx3r2.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                        </tr>
+
+                        <tr style="border-top:1px solid black">
+                            <td>
+                                <b>R1</b>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="ground/idx3r3.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="general/idx3r3.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="personal/idx3r3.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="self/idx3r3.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="semi/idx3r3.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="few_semi/idx3r3.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                        </tr>
+                        
+                    </tbody>
+                </table>
+
+                <table class="audio_demos">
+                    <thead>
+                        <tr>
+                            <th style="text-align:center;">Mixture</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr style="border-top:1px solid black">
+                            <!-- <td rowspan="2">
+                                <b>A</b>
+                            </td> -->
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="mixture/idx4.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            
+                        </tr>
+
+
+
+
+
+                    </tbody>
+                </table>
+
+
+                <table class="audio_demos">
+                    <thead>
+                        <tr>
+                            <th style="text-align:center;">Regions</th>
+                            <th style="text-align:center;">Ground</th>
+                            <th style="text-align:center;">General</th>
+                            <th style="text-align:center;">Personalized</th>
+                            <th style="text-align:center;">Self</th>
+                            <th style="text-align:center;">Semi</th>
+                            <th style="text-align:center;">Few-Semi</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr style="border-top:1px solid black">
+                            <td>
+                                <b>R1</b>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="ground/idx4r1.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="general/idx4r1.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="personal/idx4r1.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="self/idx4r1.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="semi/idx4r1.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="few_semi/idx4r1.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                        </tr>
+                        
+
+                        <tr style="border-top:1px solid black">
+                            <td>
+                                <b>R1</b>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="ground/idx4r2.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="general/idx4r2.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="personal/idx4r2.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="self/idx4r2.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="semi/idx4r2.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="few_semi/idx4r2.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                        </tr>
+
+                        <tr style="border-top:1px solid black">
+                            <td>
+                                <b>R1</b>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="ground/idx4r3.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="general/idx4r3.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="personal/idx4r3.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="self/idx4r3.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="semi/idx4r3.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="few_semi/idx4r3.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                        </tr>
+                        
+                    </tbody>
+                </table>
+
+                <!-- 2-source finish -->
+
+                <br>
+                <h4><b>II. Three-Source Mixtures</b></h4>
+
+                <table class="audio_demos">
+                    <thead>
+                        <tr>
+                            <th style="text-align:center;">Mixture</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr style="border-top:1px solid black">
+                            <!-- <td rowspan="2">
+                                <b>A</b>
+                            </td> -->
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="mixture_3/idx1.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            
+                        </tr>
+
+
+
+
+
+                    </tbody>
+                </table>
+
+
+                <table class="audio_demos">
+                    <thead>
+                        <tr>
+                            <th style="text-align:center;">Regions</th>
+                            <th style="text-align:center;">Ground</th>
+                            <th style="text-align:center;">General</th>
+                            <th style="text-align:center;">Personalized</th>
+                            <th style="text-align:center;">Self</th>
+                            <th style="text-align:center;">Semi</th>
+                            <th style="text-align:center;">Few-Semi</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr style="border-top:1px solid black">
+                            <td>
+                                <b>R1</b>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="ground_3/idx1r1.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="general_3/idx1r1.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="personal_3/idx1r1.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="self_3/idx1r1.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="semi_3/idx1r1.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="few_semi_3/idx1r1.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                        </tr>
+                        
+
+                        <tr style="border-top:1px solid black">
+                            <td>
+                                <b>R1</b>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="ground_3/idx1r2.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="general_3/idx1r2.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="personal_3/idx1r2.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="self_3/idx1r2.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="semi_3/idx1r2.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="few_semi_3/idx1r2.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                        </tr>
+
+                        <tr style="border-top:1px solid black">
+                            <td>
+                                <b>R1</b>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="ground_3/idx1r3.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="general_3/idx1r3.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="personal_3/idx1r3.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="self_3/idx1r3.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="semi_3/idx1r3.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="few_semi_3/idx1r3.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                        </tr>
+                        
+                    </tbody>
+                </table>
+
+
+                <table class="audio_demos">
+                    <thead>
+                        <tr>
+                            <th style="text-align:center;">Mixture</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr style="border-top:1px solid black">
+                            <!-- <td rowspan="2">
+                                <b>A</b>
+                            </td> -->
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="mixture_3/idx2.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            
+                        </tr>
+
+
+
+
+
+                    </tbody>
+                </table>
+
+
+                <table class="audio_demos">
+                    <thead>
+                        <tr>
+                            <th style="text-align:center;">Regions</th>
+                            <th style="text-align:center;">Ground</th>
+                            <th style="text-align:center;">General</th>
+                            <th style="text-align:center;">Personalized</th>
+                            <th style="text-align:center;">Self</th>
+                            <th style="text-align:center;">Semi</th>
+                            <th style="text-align:center;">Few-Semi</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr style="border-top:1px solid black">
+                            <td>
+                                <b>R1</b>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="ground_3/idx2r1.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="general_3/idx2r1.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="personal_3/idx2r1.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="self_3/idx2r1.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="semi_3/idx2r1.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="few_semi_3/idx2r1.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                        </tr>
+                        
+
+                        <tr style="border-top:1px solid black">
+                            <td>
+                                <b>R1</b>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="ground_3/idx2r2.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="general_3/idx2r2.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="personal_3/idx2r2.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="self_3/idx2r2.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="semi_3/idx2r2.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="few_semi_3/idx2r2.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                        </tr>
+
+                        <tr style="border-top:1px solid black">
+                            <td>
+                                <b>R1</b>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="ground_3/idx2r3.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="general_3/idx2r3.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="personal_3/idx2r3.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="self_3/idx2r3.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="semi_3/idx2r3.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="few_semi_3/idx2r3.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                        </tr>
+                        
+                    </tbody>
+                </table>
+
+                <table class="audio_demos">
+                    <thead>
+                        <tr>
+                            <th style="text-align:center;">Mixture</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr style="border-top:1px solid black">
+                            <!-- <td rowspan="2">
+                                <b>A</b>
+                            </td> -->
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="mixture_3/idx3.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            
+                        </tr>
+
+
+
+
+
+                    </tbody>
+                </table>
+
+
+                <table class="audio_demos">
+                    <thead>
+                        <tr>
+                            <th style="text-align:center;">Regions</th>
+                            <th style="text-align:center;">Ground</th>
+                            <th style="text-align:center;">General</th>
+                            <th style="text-align:center;">Personalized</th>
+                            <th style="text-align:center;">Self</th>
+                            <th style="text-align:center;">Semi</th>
+                            <th style="text-align:center;">Few-Semi</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr style="border-top:1px solid black">
+                            <td>
+                                <b>R1</b>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="ground_3/idx3r1.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="general_3/idx3r1.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="personal_3/idx3r1.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="self_3/idx3r1.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="semi_3/idx3r1.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="few_semi_3/idx3r1.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                        </tr>
+                        
+
+                        <tr style="border-top:1px solid black">
+                            <td>
+                                <b>R1</b>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="ground_3/idx3r2.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="general_3/idx3r2.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="personal_3/idx3r2.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="self_3/idx3r2.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="semi_3/idx3r2.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="few_semi_3/idx3r2.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                        </tr>
+
+                        <tr style="border-top:1px solid black">
+                            <td>
+                                <b>R1</b>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="ground_3/idx3r3.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="general_3/idx3r3.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="personal_3/idx3r3.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="self_3/idx3r3.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="semi_3/idx3r3.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="few_semi_3/idx3r3.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                        </tr>
+                        
+                    </tbody>
+                </table>
+
+                
+                <br>
+                <!-- 3-source finish -->
+                <h4><b>III. Four-Source Mixtures</b></h4>
+
+                <table class="audio_demos">
+                    <thead>
+                        <tr>
+                            <th style="text-align:center;">Mixture</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr style="border-top:1px solid black">
+                            <!-- <td rowspan="2">
+                                <b>A</b>
+                            </td> -->
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="mixture_4/idx1.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            
+                        </tr>
+
+
+
+
+
+                    </tbody>
+                </table>
+
+
+                <table class="audio_demos">
+                    <thead>
+                        <tr>
+                            <th style="text-align:center;">Regions</th>
+                            <th style="text-align:center;">Ground</th>
+                            <th style="text-align:center;">General</th>
+                            <th style="text-align:center;">Personalized</th>
+                            <th style="text-align:center;">Self</th>
+                            <th style="text-align:center;">Semi</th>
+                            <th style="text-align:center;">Few-Semi</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr style="border-top:1px solid black">
+                            <td>
+                                <b>R1</b>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="ground_4/idx1r1.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="general_4/idx1r1.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="personal_4/idx1r1.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="self_4/idx1r1.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="semi_4/idx1r1.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="few_semi_4/idx1r1.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                        </tr>
+                        
+
+                        <tr style="border-top:1px solid black">
+                            <td>
+                                <b>R1</b>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="ground_4/idx1r2.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="general_4/idx1r2.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="personal_4/idx1r2.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="self_4/idx1r2.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="semi_4/idx1r2.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="few_semi_4/idx1r2.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                        </tr>
+
+                        <tr style="border-top:1px solid black">
+                            <td>
+                                <b>R1</b>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="ground_4/idx1r3.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="general_4/idx1r3.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="personal_4/idx1r3.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="self_4/idx1r3.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="semi_4/idx1r3.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="few_semi_4/idx1r3.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                        </tr>
+                        
+                    </tbody>
+                </table>
+
+
+                <table class="audio_demos">
+                    <thead>
+                        <tr>
+                            <th style="text-align:center;">Mixture</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr style="border-top:1px solid black">
+                            <!-- <td rowspan="2">
+                                <b>A</b>
+                            </td> -->
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="mixture_4/idx2.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            
+                        </tr>
+
+
+
+
+
+                    </tbody>
+                </table>
+
+
+                <table class="audio_demos">
+                    <thead>
+                        <tr>
+                            <th style="text-align:center;">Regions</th>
+                            <th style="text-align:center;">Ground</th>
+                            <th style="text-align:center;">General</th>
+                            <th style="text-align:center;">Personalized</th>
+                            <th style="text-align:center;">Self</th>
+                            <th style="text-align:center;">Semi</th>
+                            <th style="text-align:center;">Few-Semi</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr style="border-top:1px solid black">
+                            <td>
+                                <b>R1</b>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="ground_4/idx2r1.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="general_4/idx2r1.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="personal_4/idx2r1.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="self_4/idx2r1.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="semi_4/idx2r1.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="few_semi_4/idx2r1.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                        </tr>
+                        
+
+                        <tr style="border-top:1px solid black">
+                            <td>
+                                <b>R1</b>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="ground_4/idx2r2.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="general_4/idx2r2.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="personal_4/idx2r2.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="self_4/idx2r2.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="semi_4/idx2r2.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="few_semi_4/idx2r2.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                        </tr>
+
+                        <tr style="border-top:1px solid black">
+                            <td>
+                                <b>R1</b>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="ground_4/idx2r3.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="general_4/idx2r3.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="personal_4/idx2r3.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="self_4/idx2r3.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="semi_4/idx2r3.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="few_semi_4/idx2r3.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                        </tr>
+                        
+                    </tbody>
+                </table>
+
+                <table class="audio_demos">
+                    <thead>
+                        <tr>
+                            <th style="text-align:center;">Mixture</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr style="border-top:1px solid black">
+                            <!-- <td rowspan="2">
+                                <b>A</b>
+                            </td> -->
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="mixture_4/idx3.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            
+                        </tr>
+
+
+
+
+
+                    </tbody>
+                </table>
+
+
+                <table class="audio_demos">
+                    <thead>
+                        <tr>
+                            <th style="text-align:center;">Regions</th>
+                            <th style="text-align:center;">Ground</th>
+                            <th style="text-align:center;">General</th>
+                            <th style="text-align:center;">Personalized</th>
+                            <th style="text-align:center;">Self</th>
+                            <th style="text-align:center;">Semi</th>
+                            <th style="text-align:center;">Few-Semi</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr style="border-top:1px solid black">
+                            <td>
+                                <b>R1</b>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="ground_4/idx3r1.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="general_4/idx3r1.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="personal_4/idx3r1.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="self_4/idx3r1.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="semi_4/idx3r1.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="few_semi_4/idx3r1.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                        </tr>
+                        
+
+                        <tr style="border-top:1px solid black">
+                            <td>
+                                <b>R1</b>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="ground_4/idx3r2.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="general_4/idx3r2.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="personal_4/idx3r2.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="self_4/idx3r2.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="semi_4/idx3r2.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="few_semi_4/idx3r2.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                        </tr>
+
+                        <tr style="border-top:1px solid black">
+                            <td>
+                                <b>R1</b>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="ground_4/idx3r3.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="general_4/idx3r3.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="personal_4/idx3r3.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="self_4/idx3r3.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="semi_4/idx3r3.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="few_semi_4/idx3r3.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                        </tr>
+                        
+                    </tbody>
+                </table>
+
+                <br>
+                <!-- four-source finish -->
+                <h4><b>IV. Five-Source Mixtures</b></h4>
+
+                <table class="audio_demos">
+                    <thead>
+                        <tr>
+                            <th style="text-align:center;">Mixture</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr style="border-top:1px solid black">
+                            <!-- <td rowspan="2">
+                                <b>A</b>
+                            </td> -->
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="mixture_5/idx1.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            
+                        </tr>
+
+
+
+
+
+                    </tbody>
+                </table>
+
+
+                <table class="audio_demos">
+                    <thead>
+                        <tr>
+                            <th style="text-align:center;">Regions</th>
+                            <th style="text-align:center;">Ground</th>
+                            <th style="text-align:center;">General</th>
+                            <th style="text-align:center;">Personalized</th>
+                            <th style="text-align:center;">Self</th>
+                            <th style="text-align:center;">Semi</th>
+                            <th style="text-align:center;">Few-Semi</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr style="border-top:1px solid black">
+                            <td>
+                                <b>R1</b>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="ground_5/idx1r1.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="general_5/idx1r1.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="personal_5/idx1r1.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="self_5/idx1r1.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="semi_5/idx1r1.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="few_semi_5/idx1r1.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                        </tr>
+                        
+
+                        <tr style="border-top:1px solid black">
+                            <td>
+                                <b>R1</b>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="ground_5/idx1r2.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="general_5/idx1r2.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="personal_5/idx1r2.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="self_5/idx1r2.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="semi_5/idx1r2.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="few_semi_5/idx1r2.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                        </tr>
+
+                        <tr style="border-top:1px solid black">
+                            <td>
+                                <b>R1</b>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="ground_5/idx1r3.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="general_5/idx1r3.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="personal_5/idx1r3.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="self_5/idx1r3.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="semi_5/idx1r3.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="few_semi_5/idx1r3.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                        </tr>
+                        
+                    </tbody>
+                </table>
+
+
+                <table class="audio_demos">
+                    <thead>
+                        <tr>
+                            <th style="text-align:center;">Mixture</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr style="border-top:1px solid black">
+                            <!-- <td rowspan="2">
+                                <b>A</b>
+                            </td> -->
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="mixture_5/idx2.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            
+                        </tr>
+
+
+
+
+
+                    </tbody>
+                </table>
+
+
+                <table class="audio_demos">
+                    <thead>
+                        <tr>
+                            <th style="text-align:center;">Regions</th>
+                            <th style="text-align:center;">Ground</th>
+                            <th style="text-align:center;">General</th>
+                            <th style="text-align:center;">Personalized</th>
+                            <th style="text-align:center;">Self</th>
+                            <th style="text-align:center;">Semi</th>
+                            <th style="text-align:center;">Few-Semi</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr style="border-top:1px solid black">
+                            <td>
+                                <b>R1</b>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="ground_5/idx2r1.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="general_5/idx2r1.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="personal_5/idx2r1.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="self_5/idx2r1.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="semi_5/idx2r1.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="few_semi_5/idx2r1.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                        </tr>
+                        
+
+                        <tr style="border-top:1px solid black">
+                            <td>
+                                <b>R1</b>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="ground_5/idx2r2.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="general_5/idx2r2.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="personal_5/idx2r2.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="self_5/idx2r2.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="semi_5idx2r2.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="few_semi_5/idx2r2.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                        </tr>
+
+                        <tr style="border-top:1px solid black">
+                            <td>
+                                <b>R1</b>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="ground_5/idx2r3.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="general_5/idx2r3.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="personal_5/idx2r3.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="self_5/idx2r3.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="semi_5/idx2r3.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="few_semi_5/idx2r3.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                        </tr>
+                        
+                    </tbody>
+                </table>
+
+                <table class="audio_demos">
+                    <thead>
+                        <tr>
+                            <th style="text-align:center;">Mixture</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr style="border-top:1px solid black">
+                            <!-- <td rowspan="2">
+                                <b>A</b>
+                            </td> -->
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="mixture_5/idx3.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            
+                        </tr>
+
+
+
+
+
+                    </tbody>
+                </table>
+
+
+                <table class="audio_demos">
+                    <thead>
+                        <tr>
+                            <th style="text-align:center;">Regions</th>
+                            <th style="text-align:center;">Ground</th>
+                            <th style="text-align:center;">General</th>
+                            <th style="text-align:center;">Personalized</th>
+                            <th style="text-align:center;">Self</th>
+                            <th style="text-align:center;">Semi</th>
+                            <th style="text-align:center;">Few-Semi</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr style="border-top:1px solid black">
+                            <td>
+                                <b>R1</b>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="ground_5/idx3r1.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="general_5/idx3r1.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="personal_5/idx3r1.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="self_5/idx3r1.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="semi_5/idx3r1.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="few_semi_5/idx3r1.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                        </tr>
+                        
+
+                        <tr style="border-top:1px solid black">
+                            <td>
+                                <b>R1</b>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="ground_5/idx3r2.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="general_5/idx3r2.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="personal_5/idx3r2.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="self_5/idx3r2.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="semi_5/idx3r2.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="few_semi_5/idx3r2.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                        </tr>
+
+                        <tr style="border-top:1px solid black">
+                            <td>
+                                <b>R1</b>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="ground_5/idx3r3.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="general_5/idx3r3.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="personal_5/idx3r3.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="self_5/idx3r3.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="semi_5/idx3r3.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="few_semi_5/idx3r3.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                        </tr>
+                        
+                    </tbody>
+                </table>
+
+                <!-- four source end -->
+
+
+                <br>
+            </div>
+
+            <div id="references_target" style="position: relative; top: -50px;"></div>
+            <div id="references">
+                <h1><a class="subtitle">References</a></h1>
+                
+                <p align="justify">
+                    [1] C. Han, Y. Luo, and N. Mesgarani. Real-time binaural speech separation with preserved spatial cues. In <i>IEEE International Conference on Acoustics, Speech and Signal Processing</i>, pages 6404–6408. IEEE, 2020.
+                </p>
+                <p align="justify">
+                    [2] O. Yilmaz, S. Richard. Blind Separation of Speech Mixtures via Time-Frequency Masking. In <i>IEEE Transactions on Signal Processing</i>. 2004.
+                </p>
+                <p align="justify">
+                    [3] R. Algazi, R. Duda, D. Thompson, C. Avendano. THE CIPIC HRTF DATABASE. 2001.
+                </p>
+            </div>
+
+        </div>
+
+
+
+        <div id="footer">
+            <i>&copy June 2022 by Zhongweiyang Xu</i>
+		</div>
+
+        <div class="wow fadeIn" data-wow-delay="0.4s">
+	        <div class="btn-circle-scroll">
+			    <a href="#top" class="btn-circle">
+				    <i class="fa fa-angle-double-up"></i>
+				</a>
+			</div>
+		</div>
+
+        <div style="margin:0 auto;text-align:center;margin-bottom:30px;">
+            <script type='text/javascript' id='clustrmaps' src='//cdn.clustrmaps.com/map_v2.js?cl=ffffff&w=300&t=tt&d=2Sh5jxgKi2jEME2CgF6Xv3fPqJc117g5t4vXUN8QrZQ'></script>
+        </div>
+
+        <script src="js/jquery-3.2.1.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+    	<script src="js/jquery.easing.min.js"></script>
+	    <script src="js/jquery.scrollTo.js"></script>
+        <script src="js/wow.min.js"></script>
+        <script src="js/buffer-loader.js"></script>
+        <script src="js/crossfade.js"></script>
+        <script src="js/crossfade_mono.js"></script>
+        <script src="js/init.js"></script>
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+        <script type="text/javascript">
+            $(function(){
+                $("ul li a").click(function(){
+                    var hr = $(this).attr("href");
+                    var anh = $(hr).offset().top;
+                    $("html,body").stop().animate({scrollTop:anh}, 1000);
+                })
+            })
+        </script>
+
+        <script type="text/javascript">
+            (function($) {
+        	    new WOW().init();
+
+	            jQuery(window).load(function() {
+		            jQuery("#preloader").delay(100).fadeOut("slow");
+		            jQuery("#load").delay(100).fadeOut("slow");
+	            });
+
+            	//jQuery to collapse the navbar on scroll
+	            $(window).scroll(function() {
+	        	    if ($(".navbar").offset().top > 50) {
+			            $(".navbar-fixed-top").addClass("top-nav-collapse");
+		            } else {
+			            $(".navbar-fixed-top").removeClass("top-nav-collapse");
+	            	}
+            	});
+            })(jQuery);
+        </script>
+
+        <script type="text/javascript">
+            $(document).on("scroll",function(){
+	            if($(document).scrollTop() > 50){
+		            $(".navbar").stop().animate({
+                        opacity: '0.7'
+		            });
+	            }else{
+		            $(".navbar").stop().animate({
+                        opacity:'1.0'
+		            });
+	            }
+            });
+        </script>
+
+        <script type="text/javascript">
+        	//jQuery for page scrolling feature - requires jQuery Easing plugin
+	        $(function() {
+		        $('.btn-circle-scroll a').bind('click', function(event) {
+			        var $anchor = $(this);
+			        $('html, body').stop().animate({
+			           scrollTop: $($anchor.attr('href')).offset().top
+			           }, 1500, 'easeInOutExpo');
+		    	    event.preventDefault();
+		        });
+	        });
+        </script>
+
+    </body>
 </html>

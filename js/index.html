@@ -1,0 +1,682 @@
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+
+        <meta name="description" content="SAGRNN Demos">
+        <meta name="author" content="Ke Tan">
+
+	    <title>SAGRNN: Self-Attentive Gated RNNs for Binaural Speaker Separation with Interaural Cue Preservation</title>
+
+        <!-- Bootflat CSS -->
+        <link rel="stylesheet" href="css/bootflat.css">
+
+        <!-- Bootstrap Core CSS -->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Custom CSS -->
+        <link href="css/index.css" rel="stylesheet">
+
+        <!-- Custom Fonts -->
+        <link href="font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href="http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+    </head>
+
+
+    <body>
+        <div id="top" style="position: relative; top: -100px;"></div>
+        <header id="header_navbar">
+		    <nav class="navbar navbar-default navbar-fixed-top fadeIn" role="navigation">
+                <div>
+                    <div class="navbar-header">
+					    <button type="button" class="navbar-toggle collapsed" id="button_navbar" data-toggle="collapse" data-target="#dropdown-box-1">
+						    <span class="sr-only">Toggle navigation</span>
+						    <span class="icon-bar"></span>
+						    <span class="icon-bar"></span>
+						    <span class="icon-bar"></span>
+					    </button>
+				    </div>
+
+    		        <div class="collapse navbar-collapse navbar-right" id="dropdown-box-1">
+	    			    <ul class="nav navbar-nav">
+		    			    <li><a href="#intro_target">Intro</a></li>
+                            <li><a href="#results_target">Results</a></li>
+			    			<li><a href="#samples_target">Samples</a></li>
+				    		<li><a href="#references_target">References</a></li>
+							<li><a href="#acknowledgments_target">Acknowledgments</a></li>
+				    	</ul>
+			        </div>
+                </div>
+		    </nav>
+	    </header>
+
+		<div id="paper_info">
+			<div id="paper_title">
+    	        <h1>SAGRNN: Self-Attentive Gated RNNs for Binaural Speaker Separation with Interaural Cue Preservation</h1>
+				<h4>Ke Tan<sup>1</sup>, Buye Xu<sup>2</sup>, Anurag Kumar<sup>2</sup>, Eliya Nachmani<sup>3, 4</sup>, Yossi Adi<sup>3</sup></h4>
+				<h5><sup>1</sup>The Ohio State University, <sup>2</sup>Facebook Reality Labs, <sup>3</sup>Facebook AI Research, <sup>4</sup>Tel-Aviv University</h5>
+			</div>
+		</div>
+
+        <div id="container">
+
+            <div id="intro_target" style="position: relative; top: -50px;"></div>
+	        <div id="intro">
+				<h1><a class="subtitle">Intro</a></h1>
+				<p>In this post, we present a novel framework called <i>multiple-input multiple-output self-attentive gated recurrent neural network</i> (MIMO SAGRNN) for binaural speaker separation, which produces a binaural estimate for each of the target speakers with preserved interaural cues. This approach was proposed in our paper titled "<i>SAGRNN: Self-Attentive Gated RNNs for Binaural Speaker Separation with Interaural Cue Preservation</i>", submitted to IEEE Signal Processing Letters.</p>
+				<p>In this study, the goal of binaural speaker separation is to separate \(C\) concurrent binaural speech signals \(\mathbf{s}_1, \dots, \mathbf{s}_C\) from a sound mixture \(\mathbf{y}\), where \(\mathbf{y} = \sum_{c=1}^C \mathbf{s}_c\) (noise-free condition) or \(\mathbf{y} = \sum_{c=1}^C \mathbf{s}_c + \sum_{c_n=1}^{C_n} \mathbf{n}_{c_n} \) (noisy condition). Here \(\mathbf{n}_{c_n}\) denotes the \(c_n\)-th binaural noise signal and \(C_n\) the number of noise sources. We assume that there is no room reverberation in the acoustic environment.</p>
+                <p>The SAGRNN network architecture extends the gated RNN in [1] by additionally incorporating self-attention mechanisms and dense connectivity. MIMO SAGRNN is then derived from a single-input single-output (SISO) SAGRNN by first extending the SISO SAGRNN into a multiple-input single-output (MISO) layout, in which we create two encoders, one for the <i>reference ear</i> input and the other for the <i>non-reference ear</i> input. This MISO SAGRNN estimates the separated signals in the reference ear. The MIMO system is formulated by alternately treating each ear as the reference ear, yielding estimates for both ears in a symmetric manner.</p>
+                <p>Our experimental results show that the proposed approach significantly outperforms a recent binaural separation approach (i.e. MIMO TasNet [2]) in terms of &#916;SDR, &#916;SNR, ESTOI and PESQ. Moreover, our approach effectively preserves the auditory spatial cues of talkers.</p>
+                <p>For full details, see <a href="https://arxiv.org/abs/2009.01381" target="_blank">our paper</a>.</p>
+
+                <br>
+                <a><img src="img/siso_sagrnn.png" width="100%"/></a>
+                <div class="architecture_caption">Fig. 1. Diagram of SISO SAGRNN. The dotted lines represent the procedures that exist only during training.</div>
+
+                <br>
+                <a><img src="img/SA-MULCAT.png" width="100%"/></a>
+                <div class="architecture_caption">Fig. 2. Diagram of the SA-MULCAT block. The dotted lines indicate that the procedures exist in all SA-MULCAT blocks except the first one. The symbol \(\bigotimes\) represents the element-wise multiplication, and \(\bigoplus\) the element-wise addition.</div>
+
+                <br>
+                <div style="width:100%; position:relative; display:flex;">
+                    <div style="width:50%; padding-left:15%; padding-right:15%; float:left; position:relative;">
+                        <a><img src="img/Self-Attention Block.png" style="width:100%; position:relative;"/></a>
+                    </div>
+                    <div style="width:50%; padding-left:5%; padding-right:5%; float:right; position:relative;">
+                        <a><img src="img/miso_mimo.png" style="width:100%; position:relative;"/></a>
+                    </div>
+                </div>
+                <div style="width:100%; position:relative; display:flex;">
+                    <div class="architecture_caption" style="width:50%; text-align:center;">(a)</div>
+                    <div class="architecture_caption" style="width:50%; text-align:center;">(b)</div>
+                </div>
+                <div class="architecture_caption">Fig. 3. (a) Diagram of the self-attention block. (b) Overview of the MIMO separation system with an underlying MISO system.</div>
+            </div>
+
+            <div id="clear"></div>
+
+            <div id="results_target" style="position: relative; top: -50px;"></div>
+	        <div id="results">
+                <h1><a class="subtitle">Results</a></h1>
+                <div style="width:100%; position:relative; display:flex;">
+                    <div style="width:50%; padding-left:2%; padding-right:2%; float:left; position:relative;">
+                        <div><a><img src="img/table1.png" style="width:100%; position:relative;"/></a></div>
+                        <div style="position:relative; width:85%; margin-left:7.5%; margin-right:7.5%;"><a><img src="img/table3.png" style="width:100%; position:relative; padding-top:50px;"/></a></div>
+                    </div>
+                    <div style="width:50%; padding-left:2%; padding-right:2%; float:right; position:relative;">
+                        <div style="position:relative; width:85%; margin-left:7.5%; margin-right:7.5%;"><a><img src="img/table2.png" style="width:100%; position:relative;"/></a></div>
+                        <div><a><img src="img/table4.png" style="width:100%; position:relative; padding-top:15px;"/></a></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="samples_target" style="position: relative; top: -50px;"></div>
+            <div id="samples">
+                <h1><a class="subtitle">Samples</a></h1>
+
+                <p align="justify">
+                    Here are some (binaural) audio samples for listening:
+                    <ul align="justify" >
+                        <li>Unprocessed Mixture - original binaural sound mixture</li>
+                        <li>MIMO TasNet - refer to the approach in [2]</li>
+                        <li>MIMO SAGRNN - refer to our proposed approach</li>
+                        <li>Ground Truth - original clean speech</li>
+                    </ul>
+                </p>
+
+                <br>
+
+                <h4><b>I. Male-Female Mixtures</b></h4>
+                <table class="audio_demos">
+                    <thead>
+                        <tr>
+                            <th style="text-align:center;">Sample IDs</th>
+                            <th style="text-align:center;">Unprocessed Mixture</th>
+                            <th style="text-align:center;">MIMO TasNet</th>
+                            <th style="text-align:center;">MIMO SAGRNN</th>
+                            <th style="text-align:center;">Ground-Truth</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr style="border-top:1px solid black">
+                            <td rowspan="2">
+                                <b>A</b>
+                            </td>
+                            <td rowspan="2">
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="src/samples/45-90/male-female/4_mix.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="src/samples/45-90/male-female/4_sph1_mimo_tasnet.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="src/samples/45-90/male-female/4_sph1_mimo_sagrnn.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="src/samples/45-90/male-female/4_sph1.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="src/samples/45-90/male-female/4_sph2_mimo_tasnet.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="src/samples/45-90/male-female/4_sph2_mimo_sagrnn.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="src/samples/45-90/male-female/4_sph2.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                        </tr>
+
+                        <tr style="border-top:1px solid black">
+                            <td rowspan="2">
+                                <b>B</b>
+                            </td>
+                            <td rowspan="2">
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="src/samples/45-90/male-female/31_mix.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="src/samples/45-90/male-female/31_sph1_mimo_tasnet.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="src/samples/45-90/male-female/31_sph1_mimo_sagrnn.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="src/samples/45-90/male-female/31_sph1.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="src/samples/45-90/male-female/31_sph2_mimo_tasnet.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="src/samples/45-90/male-female/31_sph2_mimo_sagrnn.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="src/samples/45-90/male-female/31_sph2.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                        </tr>
+                        <tr style="border-top:1px solid black">
+                            <td rowspan="2">
+                                <b>C</b>
+                            </td>
+                            <td rowspan="2">
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="src/samples/0-15/male-female/207_mix.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="src/samples/0-15/male-female/207_sph1_mimo_tasnet.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="src/samples/0-15/male-female/207_sph1_mimo_sagrnn.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="src/samples/0-15/male-female/207_sph1.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="src/samples/0-15/male-female/207_sph2_mimo_tasnet.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="src/samples/0-15/male-female/207_sph2_mimo_sagrnn.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="src/samples/0-15/male-female/207_sph2.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <br>
+                <h4><b>II. Male-Male Mixtures</b></h4>
+                <table class="audio_demos">
+                    <thead>
+                        <tr>
+                            <th style="text-align:center;">Sample IDs</th>
+                            <th style="text-align:center;">Unprocessed Mixture</th>
+                            <th style="text-align:center;">MIMO TasNet</th>
+                            <th style="text-align:center;">MIMO SAGRNN</th>
+                            <th style="text-align:center;">Ground-Truth</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr style="border-top:1px solid black">
+                            <td rowspan="2">
+                                <b>D</b>
+                            </td>
+                            <td rowspan="2">
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="src/samples/45-90/male-male/34_mix.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="src/samples/45-90/male-male/34_sph1_mimo_tasnet.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="src/samples/45-90/male-male/34_sph1_mimo_sagrnn.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="src/samples/45-90/male-male/34_sph1.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="src/samples/45-90/male-male/34_sph2_mimo_tasnet.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="src/samples/45-90/male-male/34_sph2_mimo_sagrnn.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="src/samples/45-90/male-male/34_sph2.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                        </tr>
+
+                        <tr style="border-top:1px solid black">
+                            <td rowspan="2">
+                                <b>E</b>
+                            </td>
+                            <td rowspan="2">
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="src/samples/0-15/male-male/130_mix.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="src/samples/0-15/male-male/130_sph1_mimo_tasnet.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="src/samples/0-15/male-male/130_sph1_mimo_sagrnn.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="src/samples/0-15/male-male/130_sph1.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="src/samples/0-15/male-male/130_sph2_mimo_tasnet.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="src/samples/0-15/male-male/130_sph2_mimo_sagrnn.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="src/samples/0-15/male-male/130_sph2.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                        </tr>
+                        <tr style="border-top:1px solid black">
+                            <td rowspan="2">
+                                <b>F</b>
+                            </td>
+                            <td rowspan="2">
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="src/samples/0-15/male-male/210_mix.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="src/samples/0-15/male-male/210_sph1_mimo_tasnet.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="src/samples/0-15/male-male/210_sph1_mimo_sagrnn.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="src/samples/0-15/male-male/210_sph1.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="src/samples/0-15/male-male/210_sph2_mimo_tasnet.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="src/samples/0-15/male-male/210_sph2_mimo_sagrnn.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="src/samples/0-15/male-male/210_sph2.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <br>
+                <h4><b>III. Female-Female Mixtures</b></h4>
+                <table class="audio_demos">
+                    <thead>
+                        <tr>
+                            <th style="text-align:center;">Sample IDs</th>
+                            <th style="text-align:center;">Unprocessed Mixture</th>
+                            <th style="text-align:center;">MIMO TasNet</th>
+                            <th style="text-align:center;">MIMO SAGRNN</th>
+                            <th style="text-align:center;">Ground-Truth</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr style="border-top:1px solid black">
+                            <td rowspan="2">
+                                <b>G</b>
+                            </td>
+                            <td rowspan="2">
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="src/samples/45-90/female-female/37_mix.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="src/samples/45-90/female-female/37_sph1_mimo_tasnet.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="src/samples/45-90/female-female/37_sph1_mimo_sagrnn.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="src/samples/45-90/female-female/37_sph1.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="src/samples/45-90/female-female/37_sph2_mimo_tasnet.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="src/samples/45-90/female-female/37_sph2_mimo_sagrnn.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="src/samples/45-90/female-female/37_sph2.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                        </tr>
+
+                        <tr style="border-top:1px solid black">
+                            <td rowspan="2">
+                                <b>H</b>
+                            </td>
+                            <td rowspan="2">
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="src/samples/45-90/female-female/40_mix.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="src/samples/45-90/female-female/40_sph1_mimo_tasnet.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="src/samples/45-90/female-female/40_sph1_mimo_sagrnn.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="src/samples/45-90/female-female/40_sph1.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="src/samples/45-90/female-female/40_sph2_mimo_tasnet.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="src/samples/45-90/female-female/40_sph2_mimo_sagrnn.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="src/samples/45-90/female-female/40_sph2.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                        </tr>
+                        <tr style="border-top:1px solid black">
+                            <td rowspan="2">
+                                <b>I</b>
+                            </td>
+                            <td rowspan="2">
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="src/samples/0-15/female-female/305_mix.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="src/samples/0-15/female-female/305_sph1_mimo_tasnet.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="src/samples/0-15/female-female/305_sph1_mimo_sagrnn.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="src/samples/0-15/female-female/305_sph1.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="src/samples/0-15/female-female/305_sph2_mimo_tasnet.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="src/samples/0-15/female-female/305_sph2_mimo_sagrnn.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                            <td>
+                                <audio controls class="audio-player" preload="metadata" style="width: 220px;">
+                                    <source src="src/samples/0-15/female-female/305_sph2.wav" type="audio/wav">
+                                </audio>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <br>
+
+                <div>
+
+                    <input type="button" onclick="sample.toggle();" value="Play/Pause">
+
+                    <div style="padding-top: 10px; margin:0 auto;text-align:center;">
+                        <div style="width: 10%; float:left; position:relative;">Speaker 1</div>
+                        <div style="width: 80%; float:left; position:relative; padding-top: 4px;"><input style="width: 100%; position:relative;" type="range" min="0" max="100" value="100" oninput="CrossfadeSample.crossfade(this);"></div>
+                        <div style="width: 10%; float:left; position:relative;">Speaker 2</div>
+                        <br style="clear: left;" />
+                    </div>
+                </div>
+            </div>
+
+            <div id="references_target" style="position: relative; top: -50px;"></div>
+            <div id="references">
+                <h1><a class="subtitle">References</a></h1>
+                <p align="justify">
+                    [1] E. Nachmani, Y. Adi, and L. Wolf. Voice separation with an unknown number of multiple speakers. In <i>International Conference on Machine Learning</i>, 2020.
+                </p>
+                <p align="justify">
+                    [2] C. Han, Y. Luo, and N. Mesgarani. Real-time binaural speech separation with preserved spatial cues. In <i>IEEE International Conference on Acoustics, Speech and Signal Processing</i>, pages 6404–6408. IEEE, 2020.
+                </p>
+            </div>
+
+            <div id="acknowledgments_target" style="position: relative; top: -50px;"></div>
+            <div id="acknowledgments">
+                <h1><a class="subtitle">Acknowledgments</a></h1>
+            </div>
+        </div>
+
+
+        <div id="footer">
+            <i>&copy September 2020 by Ke Tan</i>
+		</div>
+
+        <div class="wow fadeIn" data-wow-delay="0.4s">
+	        <div class="btn-circle-scroll">
+			    <a href="#top" class="btn-circle">
+				    <i class="fa fa-angle-double-up"></i>
+				</a>
+			</div>
+		</div>
+
+        <div style="margin:0 auto;text-align:center;margin-bottom:30px;">
+            <script type='text/javascript' id='clustrmaps' src='//cdn.clustrmaps.com/map_v2.js?cl=ffffff&w=300&t=tt&d=2Sh5jxgKi2jEME2CgF6Xv3fPqJc117g5t4vXUN8QrZQ'></script>
+        </div>
+
+        <script src="js/jquery-3.2.1.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+    	<script src="js/jquery.easing.min.js"></script>
+	    <script src="js/jquery.scrollTo.js"></script>
+        <script src="js/wow.min.js"></script>
+        <script src="js/buffer-loader.js"></script>
+        <script src="js/crossfade.js"></script>
+        <script src="js/init.js"></script>
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+        <script type="text/javascript">
+            $(function(){
+                $("ul li a").click(function(){
+                    var hr = $(this).attr("href");
+                    var anh = $(hr).offset().top;
+                    $("html,body").stop().animate({scrollTop:anh}, 1000);
+                })
+            })
+        </script>
+
+        <script type="text/javascript">
+            (function($) {
+        	    new WOW().init();
+
+	            jQuery(window).load(function() {
+		            jQuery("#preloader").delay(100).fadeOut("slow");
+		            jQuery("#load").delay(100).fadeOut("slow");
+	            });
+
+            	//jQuery to collapse the navbar on scroll
+	            $(window).scroll(function() {
+	        	    if ($(".navbar").offset().top > 50) {
+			            $(".navbar-fixed-top").addClass("top-nav-collapse");
+		            } else {
+			            $(".navbar-fixed-top").removeClass("top-nav-collapse");
+	            	}
+            	});
+            })(jQuery);
+        </script>
+
+        <script type="text/javascript">
+            $(document).on("scroll",function(){
+	            if($(document).scrollTop() > 50){
+		            $(".navbar").stop().animate({
+                        opacity: '0.7'
+		            });
+	            }else{
+		            $(".navbar").stop().animate({
+                        opacity:'1.0'
+		            });
+	            }
+            });
+        </script>
+
+        <script type="text/javascript">
+        	//jQuery for page scrolling feature - requires jQuery Easing plugin
+	        $(function() {
+		        $('.btn-circle-scroll a').bind('click', function(event) {
+			        var $anchor = $(this);
+			        $('html, body').stop().animate({
+			           scrollTop: $($anchor.attr('href')).offset().top
+			           }, 1500, 'easeInOutExpo');
+		    	    event.preventDefault();
+		        });
+	        });
+        </script>
+
+    </body>
+</html>
