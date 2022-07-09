@@ -417,7 +417,7 @@ mjx-stretchy-v mjx-c, mjx-stretchy-h mjx-c {
     <body>
         <div id="top" style="position: relative; top: -100px;"></div>
         <header id="header_navbar">
-		    <nav class="navbar navbar-default navbar-fixed-top fadeIn" role="navigation">
+		    <nav class="navbar navbar-default navbar-fixed-top fadeIn" role="navigation" style="opacity: 1;">
                 <div>
                     <div class="navbar-header">
 					    <button type="button" class="navbar-toggle collapsed" id="button_navbar" data-toggle="collapse" data-target="#dropdown-box-1">
@@ -430,7 +430,7 @@ mjx-stretchy-v mjx-c, mjx-stretchy-h mjx-c {
 
     		        <div class="collapse navbar-collapse navbar-right" id="dropdown-box-1">
 	    			    <ul class="nav navbar-nav">
-		    			    <li><a href="https://uiuc-earable-computing.github.io/binaural/#intro_target">Intro</a></li>
+		    			    <li><a href="https://uiuc-earable-computing.github.io/binaural/#intro_target">Overview</a></li>
                             <li><a href="https://uiuc-earable-computing.github.io/binaural/#results_target">Results</a></li>
 			    			<li><a href="https://uiuc-earable-computing.github.io/binaural/#samples_target">Samples</a></li>
 				    		<li><a href="https://uiuc-earable-computing.github.io/binaural/#references_target">References</a></li>
@@ -443,11 +443,12 @@ mjx-stretchy-v mjx-c, mjx-stretchy-h mjx-c {
 		<div id="paper_info">
 			<div id="paper_title">
     	        <h1>Learning to Separate Voices by Spatial Regions</h1>
-                <p style="color:red;font-size:18px;">Publish as conference paper at "International Conference on Machine Learning" - ICML 2022</p>
+                <p style="color:lightblue;font-size:18px;">Published as conference paper at ICML 2022 
+                    [ <a href="https://synrg.csl.illinois.edu/papers/source_separation_icml22.pdf">pdf </a>]</p>
 
 
-				<h4>Zhongweiyang Xu<sup>1</sup>, Romit Roy Choudhury<sup>1</sup></h4>
-				<h5><sup>1</sup>University of Illinois Urbana-Champaign</h5>
+				<h4><a href="https://zhongweiyangxu.web.illinois.edu/">Zhongweiyang Xu</a>, <a href="http://croy.web.engr.illinois.edu/">Romit Roy Choudhury</a></h4>
+				<h5>University of Illinois Urbana-Champaign</h5>
 			</div>
 		</div>
 
@@ -455,7 +456,7 @@ mjx-stretchy-v mjx-c, mjx-stretchy-h mjx-c {
 
             <div id="intro_target" style="position: relative; top: -50px;"></div>
 	        <div id="intro">
-				<h1><a class="subtitle">Intro</a></h1>
+				<h2><a class="subtitle">Brief Overview</a></h2>
                 
                 
 
@@ -463,34 +464,58 @@ mjx-stretchy-v mjx-c, mjx-stretchy-h mjx-c {
                 
 
 
-                <p>In this project, we propose a self-supervised framework to solve the classical speech separation problem under two certain scenarios. First, we assume we have two microphones on <a href="https://synrg.csl.illinois.edu/earables.html" target="_blank">'earable'</a> devices worn at the ears. Second, we do the separation by spatial regions, which means we first divide the spatial space into regions and then output a separated sound for each region, as shown below. Our method does not assume known number of sources and leverage the spatial cues provided by the HRTF for spatial separation. The result shows superior results of region-based separation comparing with classical all-source separation mechaism, while our method does not assume number of sources and is self-supervised.</p>
-                
-                <a><img src="img/binaural.jpg" class="center" style="object-fit:contain;
-                    width:400px;
-                    height:300px"></a>
-
-                <p>Since the binaural recordings are rendered by the head related transfer functions (HRTFs) and HRTFs are personal, we believe these region-based separation model should be trained in a personalized way so that the separation result is the best for each person. However, personalized HRTF from users are not available, thus we propose to let the model learn from user's real-world personal bianural recordings in a self-supervised manner, as these recordings encode the HRTF information. Our self-supervision involves two stages: the preprocessing stage and the learning stage.
-                
-                </p>
+                <p>We consider a special case of the classical audio source separation problem, where (1) two microphones are in an 
+                    <a href="https://synrg.csl.illinois.edu/earables.html" target="_blank">'earable'</a> device worn at the ears, 
+                    and (2) the sources need to be separated by spatial regions around the head. The figure below shows an example 
+                    of spatial regions around the head; our goal is to output one source (or mixture of sources) from each region. 
+                    
+                    <a><img src="img/binaural.jpg" class="center" style="object-fit:contain;
+                        width:400px;
+                        height:300px"></a>
+     
+                    We propose a two-stage self-supervised framework with a pre-processing module in the first stage and a DNN in the second.
+                    This framework does not assume knowledge of the number of sources, and importantly, leverages the spatial cues 
+                    provided by the user's personal head related transfer function (HRTF). Results show superior performance compared 
+                    to various baselines  (including  supervised models with generics HRTFs) and is slightly worse than the best possible
+                    model that uses  both personal HRTF and ground-truth based supervision. 
+                    
+                    <p>Personal HRTFs are not available, hence it is challenging to synthesize training signals that embed the personal HRTF.
+                    One possibility is to utilize real-world binaural recordings from earable devices which would naturally embed the 
+                    user's personal HRTF; of course, the problem is that such real-world recordings are not clean since they are 
+                    typically mixtures of multiple sources. 
+                    We propose a method to clean-up the real-world binaural recordings whenever possible, and show that this 
+                    "somewhat clean" data is adequate to train a region-wise source spearation model. 
+                    When the binaural recording is excessively contaminated, we realibly discard such data.
+                    Hence, our model is self-supervised and leverages the inhherent spatial cues encoded in personalized HRTFs.</p>
+                    
                 <!-- <a><embed src="img/2_stage_pipeline.pdf"  style="object-fit:contain;
                     width:1000px;
                     height:370px" class="center" /></a>
                 <a><iframe src="img/2_stage_pipeline.pdf" style="object-fit:contain;
                     width:1000px;
                     height:370px" class="center"></iframe></a> -->
-                
+
+                <p>The figure below shows the two-stages of our framework. Thhe first stage accepts real-world binaural rrecordings as 
+                    input and employs our proposed signal processing-based spatial clustering method to isolate "relatively clean" spatial sources.
+                    These sources form a personal database and is used to generate binaural training data by randomly mixing them to create
+                    various spatial mixtures (of 2, 3, 4, and even 5 sources). This mixture dataset is then  used to train a 
+                    dual-channel TasNet [1] architecture, adapted for region-based separation. The reference signals (for the loss function)
+                    are the  "somewhat clean" signals in our personal database, hence no clean labeled signal is necessary. 
+                </p>
+
                 <a><img src="img/two_stage.png" style="object-fit:contain;
                     width:1000px;
                     height:370px" class="center"></a>
-                <p>As shown above, the first stage takes real-world binaural mixture as input and use a spatial clustering module (classical signal processing based) to separate and select 'relatively clean' spatial sources. These sources form a personal database which generates a region-based training dataset by random mixing.
-                    The personalized dataset is then used in the second stage to train the dual-channel TasNet [1] for region-based separation.
+                <br>  
+
+                <p>The spatial clustering method in stage one is based on the DUET [2] paper, which aims to cluster the time-frequency 
+                    bins by interaural time and level differences, as shown in the figure below. However this approach is challenging 
+                    in the binaural case due to spatial aliasing and unknown number of sources. We improve on DUET 
+                    to solve these problems; the detailed algorithm is available in <a href="https://synrg.csl.illinois.edu/papers/source_separation_icml22.pdf" target="_blank">our paper</a>. 
                 </p>
-
-                <p>The spatial clustering module in stage one is based on the DUET [2] paper, which aims to cluster the time-frequency bins by interaural time and level differences, as shown below. However this idea is challenging to implement in the binaural case due to spatial aliasing and unknown number of sources. We further improve on this idea to solve these problems and the detailed algorithm could be checked in <a href="https://synrg.csl.illinois.edu/papers/source_separation_icml22.pdf" target="_blank">our paper</a>. </p>
                 <a><img src="img/hi_cluster.jpg" style="object-fit:contain;
-                    width:400px;
-                    height:300px" class="center"></a>
-
+                    width:500px;
+                    height:375px" class="center"></a>
 
                 <br>
                 <!-- <div class="architecture_caption">Fig. 1. Diagram of SISO SAGRNN. The dotted lines represent the procedures that exist only during training.</div> -->
@@ -501,22 +526,27 @@ mjx-stretchy-v mjx-c, mjx-stretchy-h mjx-c {
 
             <div id="results_target" style="position: relative; top: -50px;"></div>
 	        <div id="results">
-                <h1><a class="subtitle">Results</a></h1>
+                <h2><a class="subtitle">Results</a></h2>
                 <p align="justify">
-                    We first do comparison between self-supervision with supervision for region-based separation:
+                    We intend to characterize the gains from personalised HRTFs (compared to general) and the loss from self-supervision 
+                    (compared to supervised methods where clean labeled data is available). Hence, we compare with several baselines 
+                    as follows:
                     </p><ul align="justify">
-                        <li>GENERAL - Single general model trained with the CIPIC [3] HRTF database</li>
-                        <li>PERSONALIZED* - Supervised training assume known HRTF</li>
-                        <li>SELF - Self-supervised training without known HRTF</li>
-                        <li>SEMI - Same as SELF but with half clean source</li>
-                        <li>FEW-SEMI - Same as SELF but only 1hr of training</li>
+                        <li>GENERAL - Supervised model where training data is synthesized from generic HRTFs (from the CIPIC [3] HRTF database)</li>
+                        <li>PERSONALIZED* - Supervised training where the personal HRTF (measured for few users) is used to create the training data </li>
+                        <li>SELF - Self-supervised training with "somewhat clean" data, as proposed in this paper </li>
+                        <li>SEMI - Same as SELF but with half of the sources being clean</li>
+                        <li>FEW-SEMI - Same as SELF but with only 1 hour of training</li>
                     </ul>
-                    The result shows our self-supervision closes the gap between general model and ideal personalized model.
+                    Results below show that our self-supervised method closes the gap between GENERAL and the ideal PERSONALIZED* model.
                 <p></p>
                 <a><img src="img/result1.png" style="object-fit:contain;
                             width:500px;
                             height:500px"></a>
-                <p>We then do comparison between region based separation with classical all-source separation. We only consider the case when there is only one speaker is the first region and compare the SNR for that single speaker. All-source separation model is the same achitecture and is trained assuming known perosnal HRTF and known number of sources. Even though, our self-supervised models can achieve 25% of gain roughly.</p>
+                <p>We also compare between region based separation with classical all-source separation. 
+                    We only consider the case when there is only one speaker is the first region and compare the SNR for that single speaker. 
+                    All-source separation model is the same achitecture and is trained assuming known perosnal HRTF and known number of sources. 
+                    Even then, our self-supervised model can achieve a gain of around 25%.</p>
                 <a><img src="img/result2.png" style="object-fit:contain;
                             width:500px;
                             height:500px;"></a>
@@ -525,10 +555,14 @@ mjx-stretchy-v mjx-c, mjx-stretchy-h mjx-c {
 
             <div id="samples_target" style="position: relative; top: -50px;"></div>
             <div id="samples">
-                <h1><a class="subtitle">Samples</a></h1>
+                <h2><a class="subtitle">Audio Demo</a></h2>
 
                 <p align="justify">
-                    Here are some (binaural) audio samples for listening:
+                    Here are some (binaural) audio samples for listening. The "mixture" is the aggregate of all sounds as recorded by the 
+                    earphone. The rows denote each region and the columns denote the ground truth signal in that region, followed by the 
+                    various methods being compared. For example, row:R1 and col:Ground is the audio of the ground truth signal 
+                    arriving from region R1. This clip could be a single source, a mixture of few sources, or could be empty, depending on
+                    the signals present in this region. 
                     <!-- <ul align="justify" >
                         <li>Unprocessed Mixture - original binaural sound mixture</li>
                         <li>MIMO TasNet - refer to the approach in [2], where the network configurations are slightly changed such that the model is noncausal and has a comparable size to our model</li>
@@ -539,7 +573,7 @@ mjx-stretchy-v mjx-c, mjx-stretchy-h mjx-c {
                 <br>
                 
 
-                <h4><b>I. Two-Source Mixtures</b></h4>
+                <h4><b><p style="color:red;font-size:18px;">Two-Source Mixtures (3 samples below)</p></b></h4>
                 <table class="audio_demos">
                     <thead>
                         <tr>
@@ -1004,8 +1038,10 @@ mjx-stretchy-v mjx-c, mjx-stretchy-h mjx-c {
 
                 <!-- 2-source finish -->
 
+                <hr> 
+
                 <br>
-                <h4><b>II. Three-Source Mixtures</b></h4>
+                <h4><b><p style="color:red;font-size:18px;">Three-Source Mixtures (3 samples below)</p></b></h4>
 
                 <table class="audio_demos">
                     <thead>
@@ -1470,10 +1506,11 @@ mjx-stretchy-v mjx-c, mjx-stretchy-h mjx-c {
                     </tbody>
                 </table>
 
-                
+                <hr>
+
                 <br>
                 <!-- 3-source finish -->
-                <h4><b>III. Four-Source Mixtures</b></h4>
+                <h4><b><p style="color:red;font-size:18px;">Four-Source Mixtures (3 samples below)</p></b></h4>
 
                 <table class="audio_demos">
                     <thead>
@@ -1938,9 +1975,11 @@ mjx-stretchy-v mjx-c, mjx-stretchy-h mjx-c {
                     </tbody>
                 </table>
 
+                <hr> 
+
                 <br>
                 <!-- four-source finish -->
-                <h4><b>IV. Five-Source Mixtures</b></h4>
+                <h4><b><p style="color:red;font-size:18px;">Five-Source Mixtures (3 samples below)</p></b></h4>
 
                 <table class="audio_demos">
                     <thead>
@@ -2443,7 +2482,7 @@ mjx-stretchy-v mjx-c, mjx-stretchy-h mjx-c {
 		</div>
 
         <!-- <div style="margin:0 auto;text-align:center;margin-bottom:30px;">
-            <script type="text/javascript" id="clustrmaps" src='//cdn.clustrmaps.com/map_v2.js?cl=ffffff&w=300&t=tt&d=2Sh5jxgKi2jEME2CgF6Xv3fPqJc117g5t4vXUN8QrZQ'></script>
+            <script type="text/javascript" id="clustrmaps" src="./SAGRNN_ Self-Attentive Gated RNNs for Binaural Speaker Separation with Interaural Cue Preservation_files/map_v2.js"></script><a target="_top" href="http://clustrmaps.com/site/1bcwv?utm_source=widget&amp;utm_campaign=widget_ctr" id="clustrmaps-widget-v2" class="clustrmaps-map-control" style="width: 300px;"><div class="clustrmaps-map-container" style="background-color: rgb(45, 120, 173);"><div class="clstm clustrmaps-visitors" style="font-size: 12px; line-height: 16px; color: rgb(255, 255, 255);">601 Total Pageviews</div><div class="clstm clustrmaps-date" style="display: none; font-size: 12px; line-height: 16px; color: rgb(255, 255, 255);">&nbsp;</div><div class="clustrmaps-map liveDotsReady" style="width: 300px; height: 147.059px; background-image: url(&quot;//clustrmaps.com/generated_content/backs/bg-w_300-cl_ffffff.png&quot;);"><div class="jvectormap-container" style="background-color: transparent;"><svg width="300" height="147"><defs></defs><g transform="scale(0.2777777777777778) translate(90, 44.2468446279335)"></g><g></g><g style="visibility: visible;"><circle data-index="0" cx="221.31836019424125" cy="75.48916538910827" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="4" class="jvectormap-marker jvectormap-element"></circle><circle data-index="1" cx="57.14582937412966" cy="64.19231903426154" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="3" class="jvectormap-marker jvectormap-element"></circle><circle data-index="2" cx="74.46186797952859" cy="63.66101553675055" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="3" cx="57.254267631554114" cy="63.21168885061709" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="4" cx="222.88727189049905" cy="62.0929486671847" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="5" cx="154.49055397200812" cy="44.42880581699537" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="6" cx="58.79153121547827" cy="57.16568265560585" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="7" cx="92.52382824792929" cy="60.098120736895055" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="8" cx="216.10894179154454" cy="83.876958616325" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="9" cx="89.34900090868517" cy="62.3910883081635" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="10" cx="92.63087537953689" cy="59.77888424710973" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="11" cx="57.08997567258262" cy="64.19047411731583" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="12" cx="88.03403923029566" cy="62.81568842283768" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="13" cx="225.51128296255638" cy="69.6985984183734" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="14" cx="144.5193814544811" cy="52.46595447559803" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="15" cx="80.5526341434987" cy="61.93905007352051" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="16" cx="57.00038716997665" cy="64.0974622118703" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="17" cx="56.83477364147915" cy="55.54163495623175" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="18" cx="220.70396947722384" cy="75.0618551835741" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="19" cx="148.19153627325363" cy="52.509152540643406" fill="#FF0000" stroke="#ffffff" fill-opacity="0.7" stroke-width="0.5" stroke-opacity="1" r="2" class="jvectormap-marker jvectormap-element"></circle><circle data-index="1036607086" cx="92.52382824792929" cy="60.098120736895055" fill="#F8A400" stroke="#FFFFFF" fill-opacity="1" stroke-width="0.4" stroke-opacity="1" r="3" class="jvectormap-marker jvectormap-element"></circle></g><g></g></svg><div class="jvectormap-legend-cnt jvectormap-legend-cnt-h"></div><div class="jvectormap-legend-cnt jvectormap-legend-cnt-v"></div></div></div><div id="clstminf" style="display: table-cell;position: absolute;bottom: 3px;right: 5px;color: white;font-size: 12px;"></div></div><div class=""></div></a><style type="text/css">.jvectormap-container {    width: 100%;    height: 100%;    position: absolute;    overflow: hidden;}.jvectormap-tip {    position: absolute;    display: none;    border: solid 1px #CDCDCD;    border-radius: 3px;    background: #292929;    color: white;    font-family: Arial, Helvetica, sans-serif;    padding: 3px;    z-index: 9999;    font-size: 11px;    line-height: 13px;}.jvectormap-zoomin, .jvectormap-zoomout, .jvectormap-goback {    background: #ffffff none repeat scroll 0 0;    border: 1px solid #bebebe;    border-radius: 2px;    box-sizing: content-box;    color: #838383;    cursor: pointer;    font-weight: bold;    left: 10px;    padding: 3px;    position: absolute;    text-align: center;    z-index: 1;}.jvectormap-zoomin, .jvectormap-zoomout {    padding: 2px 10px;}.jvectormap-zoomin {    top: 10px;}.jvectormap-zoomout {    top: 37px;}.jvectormap-goback {    bottom: 10px;    z-index: 1000;    padding: 6px;}.jvectormap-spinner {    position: absolute;    left: 0;    top: 0;    right: 0;    bottom: 0;    background: center no-repeat url(data:image/gif;base64,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);}.jvectormap-legend-title {    font-weight: bold;    font-size: 14px;    text-align: center;}.jvectormap-legend-cnt {    position: absolute;}.jvectormap-legend-cnt-h {    bottom: 0;    right: 0;}.jvectormap-legend-cnt-v {    top: 0;    right: 0;}.jvectormap-legend {    background: black;    color: white;    border-radius: 3px;}.jvectormap-legend-cnt-h .jvectormap-legend {    float: left;    margin: 0 10px 10px 0;    padding: 3px 3px 1px 3px;}.jvectormap-legend-cnt-h .jvectormap-legend .jvectormap-legend-tick {    float: left;}.jvectormap-legend-cnt-v .jvectormap-legend {    margin: 10px 10px 0 0;    padding: 3px;}.jvectormap-legend-cnt-h .jvectormap-legend-tick {    width: 40px;}.jvectormap-legend-cnt-h .jvectormap-legend-tick-sample {    height: 15px;}.jvectormap-legend-cnt-v .jvectormap-legend-tick-sample {    height: 20px;    width: 20px;    display: inline-block;    vertical-align: middle;}.jvectormap-legend-tick-text {    font-size: 12px;}.jvectormap-legend-cnt-h .jvectormap-legend-tick-text {    text-align: center;}.jvectormap-legend-cnt-v .jvectormap-legend-tick-text {    display: inline-block;    vertical-align: middle;    line-height: 20px;    padding-left: 3px;}</style><style type="text/css">a#clustrmaps-widget-v2, #clustrmaps-widget-v2 {    display: block;    font-size: 11px;    line-height: 13px;    margin: 0 auto;    padding: 0;    position: relative;    text-align: center;    color: transparent;    min-height: 139px;    text-decoration: none;    /* text-shadow: 1px 1px 0 #01324f; */    border: 0 none;}.clustrmaps-map {    position: relative;}#clustrmaps-widget-v2 > .clustrmaps-map-container {    background-position: 0 0;    background-repeat: no-repeat;    position: relative;}#clustrmaps-widget-v2 > .clustrmaps-map-container > .clustrmaps-date {    text-align: center;    width: 100%;    z-index: 10;}#clustrmaps-widget-v2 > .clustrmaps-map-container > .clustrmaps-logo {    position: absolute;    background-image: url("//clustrmaps.com/assets/clustrmaps/img/logo4-small.png");    bottom: 0px;    background-repeat: no-repeat;    background-position: center center;    z-index: 1;    width: 100px;    height: 31px;    left: 0px;}#clustrmaps-widget-v2 > .clustrmaps-map-container > .clustrmaps-connection {    background-position: center center;    background-repeat: no-repeat;    bottom: 0;    color: rgba(255, 255, 255, 0.5);    padding: 4px 4px;    position: absolute;    right: 0;    z-index: 1;    font-variant: small-caps;}#clustrmaps-widget-v2 > .clustrmaps-bottom-text {    letter-spacing: 0px;    background: #FFFFFF;    color: #000000;    text-shadow: none;}#clustrmaps-widget-v2 > .clustrmaps-cursor-click {    background-position: center center;    background-repeat: no-repeat;    display: block;    height: 29px;    position: absolute;    right: 0;    top: 56px;    width: 30px;}#clustrmaps-widget-v2 > .clustrmaps-map-container > .clustrmaps-connection.clustrmaps-failed {    color: rgba(255, 0, 0, 0.8);}/*#clustrmaps-widget-v2 > .clustrmaps-map-container {    background-image: url("//clustrmaps.com/images/map_v2_loading.png");}*/#clustrmaps-widget-v2 > .clustrmaps-cursor-click {    background-image: url("//clustrmaps.com/assets/clustrmaps/img/cursor_click.png");}#clustrmaps-widget-v2 > .clustrmaps-bottom-text.variation {    display: none;}/* CONTROL *//*#clustrmaps-widget-v2.clustrmaps-map-control > .clustrmaps-map-container {    background-image: url("//clustrmaps.com/images/map_v2-control.png");}*/#clustrmaps-widget-v2.clustrmaps-map-control > .clustrmaps-bottom-text {    -webkit-border-radius: 3px;    -moz-border-radius: 3px;    border-radius: 3px;    border: 1px solid #999;    background: #F24D58;    background: -moz-linear-gradient(top, #FF636D 50%, #DD2929 50%);    background: -webkit-gradient(linear, left top, left bottom, color-stop(50%,#f83737), color-stop(50%,#f83737));    background: linear-gradient(to bottom, #FF636D 50%,#DD2929 51%);    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr="#FF636D", endColorstr="#f83737",GradientType=0 );    display: block;    margin: 2px auto 0;    padding: 3px 14px;    color: #FFFFFF;    text-shadow: 1px 1px 0px #5B0000;    font-weight: 600;}#clustrmaps-widget-v2.clustrmaps-map-control  > .clustrmaps-bottom-text:hover {    border: 1px solid #888;    background: #a3f5a2;    background: -moz-linear-gradient(top,  #ed8b92 50%, #D76666 50%);    background: -webkit-gradient(linear, left top, left bottom, color-stop(50%,#ed8b92), color-stop(50%,#D76666));    background: linear-gradient(to bottom, #ed8b92 50%,#D76666 51%);    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr="#ed8b92", endColorstr="#D76666",GradientType=0 );}#clustrmaps-widget-v2.clustrmaps-map-control > .clustrmaps-bottom-text.variation {    display: none;}.clstm {    text-transform: capitalize !important;    position: relative;}#clustrmaps-widget-v2.clustrmaps-map-variation > .clustrmaps-bottom-text {    -webkit-border-radius: 3px;    -moz-border-radius: 3px;    border-radius: 3px;    border: 1px solid #999;    background: #F24D58;    background: -moz-linear-gradient(top, #FF636D 50%, #DD2929 50%);    background: -webkit-gradient(linear, left top, left bottom, color-stop(50%,#f83737), color-stop(50%,#f83737));    background: linear-gradient(to bottom, #FF636D 50%,#DD2929 51%);    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr="#FF636D", endColorstr="#f83737",GradientType=0 );    display: block;    margin: 2px auto 0;    padding: 3px 14px;    color: #FFFFFF;    text-shadow: 1px 1px 0px #5B0000;    font-weight: 600;}#clustrmaps-widget-v2.clustrmaps-map-variation > .clustrmaps-bottom-text {    display: none;}#clustrmaps-widget-v2.clustrmaps-map-variation > .clustrmaps-bottom-text.variation {    display: block;}#clustrmaps-widget-v2.clustrmaps-map-variation  > .clustrmaps-bottom-text:hover {    border: 1px solid #888;    background: #a3f5a2;    background: -moz-linear-gradient(top,  #ed8b92 50%, #D76666 50%);    background: -webkit-gradient(linear, left top, left bottom, color-stop(50%,#ed8b92), color-stop(50%,#D76666));    background: linear-gradient(to bottom, #ed8b92 50%,#D76666 51%);    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr="#ed8b92", endColorstr="#D76666",GradientType=0 );}.clustrmaps-visitors, .clustrmaps-date, .clustrmaps-bottom-text {    font-family: Arial, Helvetica, sans-serif;    text-align: center;    font-weight: normal;}.clustrmaps-bottom-text {    font-size: 12px;}</style>
         </div> -->
 
         <script src="js/jquery-3.2.1.min.js"></script>
@@ -2456,7 +2495,7 @@ mjx-stretchy-v mjx-c, mjx-stretchy-h mjx-c {
         <script src="js/crossfade_mono.js"></script>
         <script src="js/init.js"></script>
         <script src="js/polyfill.min.js"></script>
-        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script id="MathJax-script" async="" src="js/tex-mml-chtml.js"></script>
 
         <script type="text/javascript">
             $(function(){
@@ -2517,4 +2556,4 @@ mjx-stretchy-v mjx-c, mjx-stretchy-h mjx-c {
 
     
 
-<div id="forest-ext-shadow-host"></div></body><div id="vimeo-record-extension"></div></html>
+<div id="diigo-video-capture" style="display: none;"><div id="diigo-video-capture-container"><div id="diigo-video-capture-logo"></div>Capture</div></div><div id="diigo-video-capture-wrapper"><div id="diigo-video-capture-wrapper-tip">Drag to outliner or <span id="diigo-video-capture-upload">Upload</span></div><div id="diigo-video-capture-wrapper-close">Close</div></div><div id="diigo-chrome-installed" style="display: none;"></div><div class="jvectormap-tip"></div></body></html>
