@@ -495,12 +495,7 @@ mjx-stretchy-v mjx-c, mjx-stretchy-h mjx-c {
                     width:1000px;
                     height:370px" class="center"></iframe></a> -->
 
-                <p>The figure below shows the two-stages of our framework. Thhe first stage accepts real-world binaural rrecordings as 
-                    input and employs our proposed signal processing-based spatial clustering method to isolate "relatively clean" spatial sources.
-                    These sources form a personal database and is used to generate binaural training data by randomly mixing them to create
-                    various spatial mixtures (of 2, 3, 4, and even 5 sources). This mixture dataset is then  used to train a 
-                    dual-channel TasNet [1] architecture, adapted for region-based separation. The reference signals (for the loss function)
-                    are the  "somewhat clean" signals in our personal database, hence no clean labeled signal is necessary. 
+                <p>The figure below shows the two-stages of our framework. The first stage accepts real-world binaural recordings as input and employs our proposed spatial clustering method to isolate “relatively clean” spatial sources. These sources are entered into a personal database and random mixtures (of 2, 3, 4, and even 5 sources) are then drawn from the database to generate the binaural training data. This mixture dataset is then used to train a dual-channel TasNet [1] architecture, adapted for region-based separation. The reference signals (for the loss function) are the “somewhat clean” signals in our personal database, hence no clean or labeled signal is necessary.
                 </p>
 
                 <a><img src="img/two_stage.png" style="object-fit:contain;
